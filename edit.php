@@ -1,3 +1,10 @@
+<?php 
+    include 'components/header.php';
+    if (!$_SESSION['is_logged_in'] || $_SESSION['privileges'] < 1) {
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,19 +18,14 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
     </script>
-    <script>
-        $(() => {
-            $('nav').load('components/nav.html');
-        });
-    </script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
     <script defer src="js/functions.js"></script>
     <script defer src="js/edit.js"></script>
 </head>
 <body>
     <div id="app">
-        <nav></nav>
+        <nav><?php include 'components/nav.php'; ?></nav>
         <main>
 
             <section id="form-section">
@@ -79,11 +81,17 @@
                         <label for="isnt-ebook">No</label>
                     </div>
     
-                    <label for="book-series">Book series: </label>
-                    <input type="text" name="book-series" id="book-series">
-    
-                    <label for="book-series-number">Number in the series: </label>
-                    <input type="number" step="0.1" name="book-series-number" id="book-series-number">
+                    <div class="flex-row">
+                        <div class="form-group">
+                            <label for="book-series">Book series: </label>
+                            <input type="text" name="book-series" id="book-series">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="book-series-number">Number in the series: </label>
+                            <input type="number" name="book-series-number" id="book-series-number">
+                        </div>
+                    </div>
     
                     <div class="flex-row">
                         <div class="form-group">
@@ -97,7 +105,7 @@
                         </div>
                     </div>
     
-                    <button id="submit-form">Submit</button>
+                    <button id="submit-form" class="btn-submit">Submit</button>
     
                 </form>
     
@@ -105,9 +113,9 @@
 
         </main>
 
-        <div class="modal-wrapper hide">
-            <div class="modal">
-                <i class="fas fa-times modal-close"></i>
+        <div class="banner-wrapper hide">
+            <div class="banner">
+                <i class="fas fa-times banner-close"></i>
             </div>
         </div>
 

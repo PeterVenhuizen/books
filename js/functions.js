@@ -15,7 +15,7 @@ function Counter(array) {
 
 function clean4URL(str) {
     return str
-        .replace(/\'|&|\.|\(|\)/g, '') // replace ', &, ., (, and )
+        .replace(/\'|&|\.|\(|\)|\,/g, '') // replace ', &, ., (, and )
         .replace(/\s+/g, ' ').trim() // reduce multiple spaces to one
         .replaceAll(/\s+/g, '_') // replace spaces by underscore
         .toLowerCase()

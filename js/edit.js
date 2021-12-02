@@ -4,7 +4,7 @@ pathname = (pathname.endsWith('/')) ? pathname.slice(0, -1) : pathname; // remov
 const pathArray = pathname.replace('/books/', '').split('/');
 
 // get the id
-postData('fetch/view.php', { view: 'single', match: parseInt(pathArray[0]) })
+postData('controllers/view.php', { view: 'single', match: parseInt(pathArray[0]) })
     .then(data => {
         if (data['books'].length) {
             
@@ -71,8 +71,8 @@ $('#submit-genre').click(function(e) {
 
 });
 
-$('body').on('click', '.modal-close', function(e) {
-    $(this).closest('.modal-wrapper').addClass('hide');
+$('body').on('click', '.banner-close', function(e) {
+    $(this).closest('.banner-wrapper').addClass('hide');
 });
 
 // submit form
@@ -97,16 +97,16 @@ $('#submit-form').click(function(e) {
         if (myFormData['read_end'] === '') { myFormData['read_end'] = '1970-01-01'; }
         console.log(myFormData);
 
-        postData('fetch/edit.php', myFormData)
+        postData('controllers/edit.php', myFormData)
             .then(data => {
 
 
-                $('.modal').empty();
-                $('.modal').append($('<i/>', { 'class': 'fas fa-times modal-close' }));
+                $('.banner').empty();
+                $('.banner').append($('<i/>', { 'class': 'fas fa-times banner-close' }));
 
                 // check return messages
                 if (data['success']) {
-                    $('.modal').append([
+                    $('.banner').append([
                         $('<p/>', { text: 'Updated completed successfully!' }).prepend($('<i/>', { 'class': 'fas fa-check' })),
                         $('<p/>', { text: 'You will be automatically redirected to the previous page in 3 seconds.' })
                     ]);
@@ -117,13 +117,13 @@ $('#submit-form').click(function(e) {
                     }, 3000);
 
                 } else {
-                    $('.modal').append([
+                    $('.banner').append([
                         $('<p/>', { text: 'Hmm, something has gone wrong:' }).prepend($('<i/>', { 'class': 'fas fa-exclamation-circle' })),
                         $('<p/>', { text: data['feedback'] })
                     ]);
                 }
 
-                $('.modal-wrapper').removeClass('hide');            
+                $('.banner-wrapper').removeClass('hide');            
 
             })
             .catch((error) => {

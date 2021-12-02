@@ -1,164 +1,7 @@
-/* 
-/* GRID STRUCTURE */
-#app {
-    height: 100vh;
-
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-areas: 
-        'header'
-        'main';
-}
-#app > header {
-    grid-area: header;
-    /* background-color: green; */
-}
-#app > main {
-    grid-area: main;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 1em;
-} */
-
-/* NAV */
-/* https://webdesign.tutsplus.com/tutorials/how-to-build-a-responsive-navigation-bar-with-flexbox--cms-33535 */
-nav { 
-    display: flex;
-    flex-direction: row;
-    background: #222;
-    padding: 5px 15px;
-}
-nav a {
-    color: white;
-}
-#menu {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-.logo {
-    flex: 1;
-    order: 0;
-    font-size: 20px;
-    padding: 7.5px 10px 7.5px 0;
-}
-.item {
-    padding: 10px;
-    order: 1;
-    position: relative;
-    display: block;
-    width: auto;
-}
-.item.button {
-    padding: 9px 5px;
-}
-.item:not(.button) a:hover,
-.item a:hover::after {
-    color: #ccc;
-}
-
-#menu li.button a {
-    padding: 10px 15px;
-    margin: 5px 0;
-}
-.button {
-    order: 2;
-}
-.button a {
-    background: #0080ff;
-    border: 1px royalblue solid;
-}
-.button.secondary {
-    border: 0;
-}
-.button.secondary a {
-    background: transparent;
-    border: 1px #0080ff solid;
-}
-.button a:hover {
-    text-decoration: none;
-}
-.button:not(.secondary) a:hover {
-    background: royalblue;
-    border-color: darkblue;
-}
-
-/* TOP MODAL */
-.modal-wrapper {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 99;
-}
-.modal {
-    position: relative;
-    padding: 1em;
-    background: #fff;
-    margin: auto 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-}
-i.modal-close {
-    font-size: 1.5em;
-    position: absolute;
-    cursor: pointer;
-    top: 10px;
-    right: 15px;
-}
-.modal p {
-    text-align: center;
-}
-.modal p:first-of-type {
-    margin-bottom: 0.5em;
-}
-.hide {
-    display: none;
-}
-.modal .fa-check {
-    color: rgb(80, 220, 100);
-    margin-right: 0.5em;
-    font-size: 1.5em;
-    vertical-align: baseline;
-}
-.modal .fa-exclamation-circle, .modal .fa-exclamation-triangle {
-    color: rgb(184, 15, 10);
-    margin-right: 0.5em;
-    font-size: 1.5em;
-    vertical-align: baseline;
-}
-.modal.warning {
-    /* border-bottom: 3px solid rgb(184, 15, 10); */
-}
-.modal.warning div {
-    display: flex;
-    align-items: center;
-}
-.modal.warning a, .modal.warning span {
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 0.1em 0.3em;
-    cursor: pointer;
-    margin-inline: 1em;
-}
-.modal.warning a:hover {
-    color: rgb(184, 15, 10);
-    border-color: rgb(184, 15, 10);
-}
-.modal.warning span:hover {
-    color: #0080ff;
-    border-color: #0080ff;
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+@import 'layout.css'; /* grid layout */
+@import 'nav.css'; /* nav */
+@import 'defaults.css';
 
 /* SEARCH BOOKS */
 #book-search, #api-search {
@@ -166,12 +9,13 @@ i.modal-close {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    margin-bottom: 2em;
+    /* margin-bottom: 2em; */
 }
 #search-books {
     font-size: 2.5em;
     padding: 0.25em 2em 0.25em 0.75em;
     border-radius: 1em;
+    margin: 0;
 }
 #search-books:focus {
     outline: none;
@@ -260,16 +104,16 @@ i.modal-close {
 .recent-book img {
     height: 125px;
     margin-right: -50px;
-    -webkit-transform: perspective(150px) rotateY(-10deg);
+    /* -webkit-transform: perspective(150px) rotateY(-10deg); */
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.5s;
+    transition: margin 0.5s ease-in-out;
     border-radius: 5px;
 }
 .recent-book img:hover {
-    -webkit-transform: perspective(0) rotateY(0deg);
+    /* -webkit-transform: perspective(0) rotateY(0deg); */
     z-index: 1;
     position: relative;
-    margin-left: calc(60px + 1em);
+    margin-left: calc(50px + 1em);
     margin-right: 1em;
     box-shadow: 6px 4px 4px rgba(0, 0, 0, 0.3);
     transition: all 0.3s;
@@ -369,7 +213,7 @@ em {
     height: 1px;
     color: #333;
     background-color: #333;
-    margin-block: 0.5em;
+    margin: 0.5em 0;
 }
 .read-book .last-read, .single-book .last-read {
     align-self: flex-end;
@@ -423,7 +267,100 @@ em {
     transition: color 0.2s;
 }
 
-/* NEW */
+/* TOP banner */
+.banner-wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 99;
+}
+.banner {
+    position: relative;
+    padding: 1em;
+    background: #fff;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+i.banner-close {
+    font-size: 1.5em;
+    position: absolute;
+    cursor: pointer;
+    top: 10px;
+    right: 15px;
+}
+.banner p {
+    text-align: center;
+}
+.banner p:first-of-type {
+    margin-bottom: 0.5em;
+}
+.hide {
+    display: none;
+}
+.banner .fa-check {
+    color: rgb(80, 220, 100);
+    margin-right: 0.5em;
+    font-size: 1.5em;
+    vertical-align: baseline;
+}
+.banner .fa-exclamation-circle, .banner .fa-exclamation-triangle {
+    color: rgb(184, 15, 10);
+    margin-right: 0.5em;
+    font-size: 1.5em;
+    vertical-align: baseline;
+}
+.banner.warning div {
+    display: flex;
+    align-items: center;
+}
+.banner.warning a, .banner.warning span {
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 0.1em 0.3em;
+    cursor: pointer;
+    margin-inline: 1em;
+}
+.banner.warning a:hover {
+    color: rgb(184, 15, 10);
+    border-color: rgb(184, 15, 10);
+}
+.banner.warning span:hover {
+    color: #0080ff;
+    border-color: #0080ff;
+}
+
+/* GENRE TAGS */
+#book-genres {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* padding: 0.5em 0; */
+}
+.genre-tag {
+    font-size: 0.8em;
+    border: 1px solid black;
+    border-radius: 1em;
+    padding: 0.25em 0.5em;
+    margin: 0.25em;
+}
+.delete-tag {
+    padding: 0 0.25em;
+    cursor: pointer;
+}
+.delete-tag:hover {
+    color: red;
+}
+
+/* NEW & EDIT */
+#form-section {
+    width: 100%;
+}
 #api-search { 
     width: 100%;
 }
@@ -436,20 +373,13 @@ em {
     justify-content: space-between;
     margin-top: 0.5em;
 }
-.prev-next > button {
-    padding: 0.25em;
-    cursor: pointer;
-}
+.or { padding: 1.5em 0; }
 
 #api-search-results {
     max-width: 750px;
     overflow-y: auto;
     display: flex;
 }
-#search-books {
-    width: 100%;
-}
-
 .book-meta {
     display: flex;
     flex-direction: column;
@@ -493,57 +423,6 @@ em {
     margin: 0.1em 0 0.25em 0;
 }
 
-#form-section {
-    width: 100%;
-}
-#book-form {
-    display: flex;
-    flex-direction: column;
-}
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-#form-section input[type], textarea {
-    padding: 0.1em 0.25em;
-    border-radius: 0.5em;
-    border: 1px solid black;
-    padding: 0.25em 0.5em;
-    outline: none;
-    margin-bottom: 0.5em;
-}
-#form-section input:invalid:required {
-    border: 1px solid red;
-    background-color: rgba(255, 0, 0, 0.05);
-}
-#form-section input:valid:required {
-    border: 1px solid green;
-    background-color: rgba(0, 255, 0, 0.1);
-}
-#book-genres {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    /* padding: 0.5em 0; */
-}
-.genre-tag {
-    font-size: 0.8em;
-    border: 1px solid black;
-    border-radius: 1em;
-    padding: 0.25em 0.5em;
-    margin: 0.25em;
-}
-.delete-tag {
-    padding: 0 0.25em;
-    cursor: pointer;
-}
-.delete-tag:hover {
-    color: red;
-}
-
-/* VIEW */
-
-
 @media all and (min-width: 700px) {
     .book img {
         height: 200px;
@@ -581,14 +460,6 @@ em {
 
 }
 @media all and (min-width: 960px) {
-
-    /* nav */
-    nav {
-        justify-content: center;
-    }
-    #menu {
-        max-width: 1200px;
-    }
 
     /* books and latest */
     #books {
@@ -628,7 +499,6 @@ em {
         padding: 0 0.8em 0 0.5em;
     }
 
-
     /* new & edit form */
     .book-meta {
         max-width: 150px;
@@ -636,11 +506,5 @@ em {
     .book-meta div {
         font-size: 1em;
     }
-    /* .flex-row {
-        flex-direction: column;
-        justify-content: space-between;
-    }
-    .form-group {
-        display: block;
-    } */
+
 }

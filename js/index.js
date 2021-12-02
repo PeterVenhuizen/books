@@ -1,7 +1,7 @@
 window.addEventListener('load', (e) => {
 
     // load latest ten books
-    postData('fetch/view.php', { view: 'latest', offset: 0, limit: 10 })
+    postData('controllers/view.php', { view: 'latest', offset: 0, limit: 10 })
         .then(data => {
             for (let book of data['books'].reverse()) {
                 $('#last-ten').append(
@@ -16,7 +16,7 @@ window.addEventListener('load', (e) => {
         })
 
     // load genre word cloud
-    postData('fetch/view.php', { view: 'cloud' })
+    postData('controllers/view.php', { view: 'cloud' })
         .then(data => {
 
             // count the occurences of each genre

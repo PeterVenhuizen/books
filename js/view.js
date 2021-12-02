@@ -12,10 +12,10 @@ const months = {
 
 const bookSearch = function(params) {
 
-    postData('fetch/view.php', params)
+    postData('controllers/view.php', params)
         .then(data => {
 
-            console.log(data);
+            //console.log(data);
             $('#books').append(
                 $('<h1/>', { 'class': 'search-h1', html: `<em>${data['books'].length}</em> results for "<em>${params['match']}</em>"` } )
             );
@@ -41,12 +41,12 @@ const booksAndLetters = function(params) {
 
     $('#btn-load-more').show();
 
-    postData('fetch/view.php', params)
+    postData('controllers/view.php', params)
         .then(data => {
 
             // check which letters are already there
             let letters = $('.big-letter').map(function() { return $(this).text(); }).get();
-            let firstLetter = (letters.length) ? letters.pop() : 'A';
+            let firstLetter = (letters.length) ? letters.pop() : '';
 
             // if the number of books is smaller than the limit, 
             // hide the show more button
@@ -82,7 +82,7 @@ const booksAndYears = function(params) {
 
     $('#btn-load-more').show();
 
-    postData('fetch/view.php', params)
+    postData('controllers/view.php', params)
         .then(data => {
 
             // check which letters are already there
@@ -143,10 +143,10 @@ const booksAndHeader = function(params) {
 
     $('#btn-load-more').show();
 
-    postData('fetch/view.php', params)
+    postData('controllers/view.php', params)
         .then(data => {
 
-            console.log(data['books'].length);
+            //console.log(data['books'].length);
 
             // hide show more
             if (data['books'].length < params['limit']) {
@@ -177,11 +177,11 @@ const booksAndHeader = function(params) {
 }
 
 const singleBook = function(params) {
-    postData('fetch/view.php', params)
+    postData('controllers/view.php', params)
         .then(data => {
 
             const book = data['books'].pop();
-            console.log(book);
+            //console.log(book);
 
             // get the dates and check if this book was or is being read
             let readStart = new Date(book['read_start']);
@@ -192,9 +192,11 @@ const singleBook = function(params) {
                 // not read
                 readHistory = 'No reading history information available';
             } else if (book['read_end'] === "1970-01-01") {
-                readHistory = `Started reading on <time datetime="${book['read_start']}">${months[readStart.getMonth()]} ${readStart.getDate()}</time>`;
+                readHistory = `Started reading on <time datetime="${book['read_start']}">${months[readStart.getMonth()]} ${readStart.getDate()}, ${readStart.getFullYear()}</time>`;
+            } else if (readStart.getFullYear() === readEnd.getFullYear()) {
+                readHistory = `Last read from <time datetime="${book['read_start']}">${months[readStart.getMonth()]} ${readStart.getDate()}</time> till <time datetime="${book['read_end']}">${months[readEnd.getMonth()]} ${readEnd.getDate()}, ${readEnd.getFullYear()}</time>`;
             } else {
-                readHistory = `Last read from <time datetime="${book['read_start']}">${months[readStart.getMonth()]} ${readStart.getDate()}</time> till <time datetime="${book['read_end']}">${months[readEnd.getMonth()]} ${readEnd.getDate()}</time>`;
+                readHistory = `Last read from <time datetime="${book['read_start']}">${months[readStart.getMonth()]} ${readStart.getDate()}, ${readStart.getFullYear()}</time> till <time datetime="${book['read_end']}">${months[readEnd.getMonth()]} ${readEnd.getDate()}, ${readEnd.getFullYear()}</time>`;
             }
 
             $('#books').append(
@@ -219,13 +221,13 @@ const singleBook = function(params) {
             );
 
             $('#app').append([
-                $('<div/>', { 'class': 'modal-wrapper hide' }).append(
-                    $('<div/>', { 'class': 'modal warning' }).append([
-                        $('<i/>', { 'class': 'fas fa-times modal-close' }),
+                $('<div/>', { 'class': 'banner-wrapper hide' }).append(
+                    $('<div/>', { 'class': 'banner warning' }).append([
+                        $('<i/>', { 'class': 'fas fa-times banner-close' }),
                         $('<p/>', { html: 'Are you sure want to <em>permanently</em> remove this book?' }).prepend($('<i/>', { 'class': 'fas fa-exclamation-triangle' })),
                         $('<div/>').append([
                             $('<a/>', { 'href': `${book['id']}/${clean4URL(book['title'])}/delete/`, text: 'Ok' }),
-                            $('<span/>', { 'class': 'modal-close', text: 'Cancel' })
+                            $('<span/>', { 'class': 'banner-close', text: 'Cancel' })
                         ])
                     ])
                 )
@@ -239,25 +241,25 @@ const singleBook = function(params) {
     // delete
     $('body').on('click', '.btn-delete', function(e) {
         e.preventDefault();
-        $('.modal-wrapper').removeClass('hide');
+        $('.banner-wrapper').removeClass('hide');
     });
 
     // hide delete
-    $('body').on('click', '.modal-close', function(e) {
-        $(this).closest('.modal-wrapper').addClass('hide');
+    $('body').on('click', '.banner-close', function(e) {
+        $(this).closest('.banner-wrapper').addClass('hide');
     });
 }
 
 // view params
-console.log(pathArray);
+//console.log(pathArray);
 let params = { 
     view: pathArray.shift(),
     match: pathArray.shift(),
     category: pathArray.shift(),
     offset: 0,
-    limit: 30
+    limit: 20
 }
-console.log(params);
+//console.log(params);
 
 // the above works for all cases, except for the single view
 if (!isNaN(+params['view'])) { // see if it can be turned into a number
@@ -271,8 +273,9 @@ switch (params['view']) {
         // of searching for author or title
         if (params['category'] !== undefined) {
             [params['match'], params['category']] = [params['category'], params['match']];
+        } else { // not sure why I need this, but other it doesn't work in the controllers/view.php script
+            params['category'] = 'general';
         }
-        console.log(params);
         bookSearch(params);
         break;
     case 'latest':
@@ -309,3 +312,12 @@ $('#btn-load-more').click(() => {
     }
 });
 
+// auto load more at the bottom of the page
+const main = document.querySelector('#app > main');
+$('main').on('scroll', function() {
+    let atBottom = main.scrollHeight - Math.floor(Math.abs(main.scrollTop)) === main.clientHeight;
+    let moreToSee = $('#btn-load-more').css('display') !== 'none';
+    if (atBottom && moreToSee) {
+        $('#btn-load-more').click();
+    }
+});

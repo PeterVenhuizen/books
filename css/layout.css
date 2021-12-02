@@ -1,0 +1,36 @@
+#app {
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 
+        'header'
+        'main';
+}
+#app > header {
+    grid-area: header;
+}
+#app > main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 1em;
+}
+
+/* "hovering" floating container */
+.center-hover {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 0.5em;
+}
+
+.center-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px;
+}

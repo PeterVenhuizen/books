@@ -6,9 +6,9 @@ function getBooks(offset, limit) {
     const searchTerm = $('#search-books').val().replace(/ /g, '%2B');
 
     if (searchTerm.length !== 0) {
-        
+
         async function fetchBooks() {
-            let response = await fetch(`fetch/proxy.php?q=${searchTerm}&offset=${offset}&limit=${limit}`);
+            let response = await fetch(`controllers/proxy.php?q=${searchTerm}&offset=${offset}&limit=${limit}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -57,10 +57,12 @@ function getBooks(offset, limit) {
                     // Description
                     try {
                         try {
-                            bookMeta['desc'] = book['longDescription'].replace(/(<([^>]+)>)/gi, '');
+                            // bookMeta['desc'] = book['longDescription'].replace(/(<([^>]+)>)/gi, '');
+                            bookMeta['desc'] = book['longDescription'].replace(/<br\s*[\/]?>/gi, "\n").replace(/<p>\s*/gi, '').replaceAll('</p>', "\n").replace(/<[\/]?\w*>/gi, '');
                         } catch(e) {
                             // no long description, try to get the short description
-                            bookMeta['desc'] = book['shortDescription'].replace(/(<([^>]+)>)/gi, '');
+                            // bookMeta['desc'] = book['shortDescription'].replace(/(<([^>]+)>)/gi, '');
+                            bookMeta['desc'] = book['shortDescription'].replace(/<br\s*[\/]?>/gi, "\n").replace(/<p>\s*/gi, '').replaceAll('</p>', "\n").replace(/<[\/]?\w*>/gi, '');
                         }
                     } catch {
                         // no short description either :/
@@ -146,7 +148,7 @@ function getBooks(offset, limit) {
 // get the first 10 results
 $('#search-submit, .fa-search').click(function(e) {
     e.preventDefault();
-    getBooks(offset, limit);
+    getBooks(0, limit);
 });
 
 // next 10
@@ -195,12 +197,13 @@ $('#submit-genre').click(function(e) {
 
 });
 
-$('body').on('click', '.modal-close', function(e) {
-    $(this).closest('.modal-wrapper').addClass('hide');
+$('body').on('click', '.banner-close', function(e) {
+    $(this).closest('.banner-wrapper').addClass('hide');
+    $('.banner').html('');
 });
 
 // submit form
-$('#submit-form').click(function(e) {
+// $('#submit-form').click(function(e) {
     jQuery('#book-form').submit(function(e) {
         e.preventDefault();
 
@@ -210,32 +213,37 @@ $('#submit-form').click(function(e) {
         const myFormData = Object.fromEntries(formData);
         myFormData['book-genre'] = [...document.querySelectorAll('.genre-tag')].map((el) => el.innerText).join(';');
 
-        postData('fetch/new.php', myFormData)
+        postData('controllers/new.php', myFormData)
             .then(data => {
 
-                $('.modal').empty();
-                $('.modal').append($('<i/>', { 'class': 'fas fa-times modal-close' }));
-                $('.modal-wrapper').removeClass('hide');            
+                console.log(data);
+
+                // $('.banner').empty();
+                $('.banner').html('');
+                $('.banner').append($('<i/>', { 'class': 'fas fa-times banner-close' }));
+                $('.banner-wrapper').removeClass('hide');
 
                 // check return messages
                 if (data['success']) {
-                    $('.modal').append([
-                        $('<p/>', { text: 'Book add successfully!' }).prepend($('<i/>', { 'class': 'fas fa-check' })),
-                        $('<p/>', { text: 'You will be automatically redirected to the home page in 3 seconds.' })
+                    $('.banner').append([
+                        $('<p/>', { text: 'Book added successfully!' }).prepend($('<i/>', { 'class': 'fas fa-check' })),
+                        $('<p/>', { text: 'This page will automatically reload in 3 seconds.' })
                     ]);
-                    $('.modal-wrapper').removeClass('hide');
+                    // $('.banner-wrapper').removeClass('hide');
 
                     // reload 
                     setTimeout(() => {
-                        window.location.href = '/books/';
+                        window.location.reload();
                     }, 3000);
 
                 } else {
-                    $('.modal').append([
+                    $('.banner').append([
                         $('<p/>', { text: 'Hmm, something has gone wrong:' }).prepend($('<i/>', { 'class': 'fas fa-exclamation-circle' })),
                         $('<p/>', { text: data['feedback'] })
                     ]);
                 }
+
+                       
 
             })
             .catch((error) => {
@@ -243,4 +251,4 @@ $('#submit-form').click(function(e) {
                 console.error('Error:', error);
             })
     });
-});
+// });

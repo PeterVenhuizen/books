@@ -1,0 +1,32 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteBase /books/
+
+    # automatically add a trialing slash, if missing
+    RewriteCond %{REQUEST_URI} !(/$|\.) 
+    RewriteRule (.*) %{REQUEST_URI}/ [R=301,L] 
+
+    RewriteRule ^search/([-_\w\d]+)/$ view.php?view=search&match=$1&cat=general [NC,L]
+    RewriteRule ^search/([-_\w\d]+)/([-_\w\d]+)/$ view.php?view=search&match=$2&cat=$1 [NC,L]
+
+    # view
+    RewriteRule ^all/ view.php?view=all
+    RewriteRule ^latest/ view.php?view=latest [NC,L]
+    RewriteRule ^(\d+)/([-_\w]+)/$ view.php?view=single&id=$1&title=$2 [NC,L]
+    RewriteRule ^genre/([-_\w]+)/$ view.php?view=genre&match=$1 [NC,L]
+    RewriteRule ^author/([-_\w]+)/$ view.php?view=author&match=$1 [NC,L]
+    RewriteRule ^series/([-_\w]+)/$ view.php?view=series&match=$1 [NC,L]
+
+    # new
+    RewriteRule ^new/ new.php
+
+    # edit
+    RewriteRule ^(\d+)/([-_\w+]+)/edit/$ edit.php?id=$1&title=$2 [NC,L]
+
+    # delete 
+    RewriteRule ^(\d+)/([-_\w+]+)/delete/$ fetch/delete.php?id=$1&title=$2 [NC,L]
+
+    # logout
+    RewriteRule ^logout/ logout.php
+
+</IfModule>

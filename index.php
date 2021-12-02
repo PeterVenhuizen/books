@@ -1,3 +1,7 @@
+<?php 
+    include 'components/header.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,21 +15,14 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous">
     </script>
-    <script>
-        $(() => {
-            $('nav').load('components/nav.html');
-        });
-    </script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
     <script defer src="js/functions.js"></script>
     <script defer src="js/index.js"></script>
 </head>
 <body>
     <div id="app">
-        <nav>
-            <div>Test</div>
-        </nav>
+        <nav><?php include 'components/nav.php'; ?></nav>
         <main>
 
             <form id="book-search">

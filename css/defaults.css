@@ -1,0 +1,213 @@
+/* default document settings */
+* { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+input, textarea, button { 
+    font-family: inherit;
+}
+body { 
+    background-color: var(--off-white);
+}
+
+/* colors */
+:root {
+    --primary-blue: rgb(0, 128, 255);
+    --primary-blue-shade: rgba(0, 128, 255, 0.1);
+    --success-green: rgb(80, 220, 100);
+    --success-green-shade: rgba(80, 220, 100, 0.1);
+    --warning-orange: rgb(255, 165, 0);
+    --warning-orange-shade: rgba(255, 165, 0, 0.1);
+    --error-red: rgb(250, 128, 114);
+    --error-red-shade: rgba(250, 128, 114, 0.1);
+
+    --not-quite-black: #222;
+    --off-white: #eeeff4;
+    --transparent-gray: rgba(34, 35, 58, 0.2);
+    --text-gray: #7c7c7c;
+    --light-gray: #ccc;
+}
+
+/* links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* not quite links */
+.underline {
+    text-decoration: underline;
+    cursor: pointer;
+}
+.underline:hover {
+    color: var(--primary-blue);
+}
+
+/* forms */
+form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+}
+form h2 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+form p {
+    line-height: 1.25em;
+    margin: 0.25em 0;
+    color: var(--text-gray);
+}
+form label {
+    font-weight: bold;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type],
+select,
+textarea {
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 0.25em 0 1em 0;
+    background-color: white;
+}
+input[type].invalid {
+    border-color: var(--error-red);
+    background-color: var(--error-red-shade);
+}
+input[type]:focus,
+select:focus {
+    outline-color: var(--primary-blue);
+}
+input[type]::placeholder {
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+form > .btn-submit {
+    color: var(--primary-blue);
+    background-color: white;
+    border: 2px solid var(--primary-blue);
+    outline: none;
+    border-radius: 5px;
+    padding: 0.35em;
+    font-size: 1.5em;
+    margin-top: 0.5em;
+    cursor: pointer;
+    text-align: center;
+}
+form > .btn-submit:hover {
+    background-color: var(--primary-blue-shade);
+}
+
+/* form feedback */
+.feedback {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    margin-top: 0.5em;
+    padding: 0.5em;
+}
+.feedback li {
+    list-style-type: none;
+    margin: 0.5em 0;
+}
+
+/* feedback classes */
+.primary {
+    color: var(--primary-blue);
+    border-color: var(--primary-blue);
+    background-color: var(--primary-blue-shade);
+}
+.error {
+    color: var(--error-red);
+    border-color: var(--error-red);
+    background-color: var(--error-red-shade);
+}
+.warning {
+    color: var(--warning-orange);
+    border-color: var(--warning-orange);
+    background-color: var(--warning-orange-shade);
+}
+.success {
+    color: var(--success-green);
+    border-color: var(--success-green);
+    background-color: var(--success-green-shade);
+}
+
+/* buttons */
+button {
+    padding: 0.25em 0.5em;
+    font-weight: bold;
+    border: 1px solid black;
+    background-color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+button:disabled {
+    color: var(--light-gray);
+    border-color: var(--light-gray);
+    cursor: initial;
+}
+
+.btn-small {
+    border-radius: 25px;
+}
+.btn-medium {
+    border-radius: 25px;
+    font-size: 1.25em;
+    padding: 0.25em 0.75em;
+}
+
+.btn-primary {
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+.btn-primary:hover {
+    background-color: var(--primary-blue-shade);
+}
+
+.btn-error {
+    border-color: var(--error-red);
+    color: var(--error-red);
+}
+.btn-error:hover {
+    background-color: var(--error-red-shade);
+}
+
+.btn-warning {
+    border-color: var(--warning-orange);
+    color: var(--warning-orange);
+}
+.btn-warning:hover {
+    background-color: var(--warning-orange-shade);
+}
+
+.btn-success {
+    border-color: var(--success-green);
+    color: var(--success-green);
+}
+.btn-success:hover {
+    background-color: var(--success-green-shade);
+}
+
+/* hide */
+.hide {
+    display: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* misc */
+hr {
+    width: 100%;
+    border: none;
+    height: 1px; 
+    color: var(--light-gray);
+    background-color: var(--light-gray);
+}
